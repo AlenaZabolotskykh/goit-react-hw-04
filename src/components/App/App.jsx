@@ -10,6 +10,8 @@ export default function App() {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isEmpty, setIsEmpty] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   const onHandleSubmit = (value) => {
     setQuery(value);
@@ -22,8 +24,12 @@ export default function App() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const data = await getImage(query, page);
-        console.log(data);
+        const { results, total_pages } = await getImage(query, page);
+        if (!results.length) {
+          return setIsEmpty(true);
+        }
+        setImages((prevImages) => [...prevImages, ...results]);
+        setIsVisible(page < total_pages);
       } catch {
         setError(error);
       } finally {
@@ -31,6 +37,10 @@ export default function App() {
       }
     };
     fetchData();
-  }, [error, page, query]);
-  return <SearchBar onSubmit={onHandleSubmit} />;
+  }, [page, query]);
+
+  return;
+
+  <SearchBar onSubmit={onHandleSubmit} />;
+  {images.length>0 && }
 }
