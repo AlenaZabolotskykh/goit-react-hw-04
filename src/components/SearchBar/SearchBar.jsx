@@ -17,6 +17,7 @@ export default function SearchBar({ onSubmit }) {
     <header>
       <form onSubmit={handleSubmit}>
         <input
+          name="search"
           value={query}
           onChange={handleChange}
           type="text"
