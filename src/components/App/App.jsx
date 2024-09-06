@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import { getImage } from "../../getImage";
+import ImageGallery from "../ImageGallery/ImageGallery";
+import Loader from "../Loader/Loader";
 
 import "./App.css";
 
@@ -39,8 +41,20 @@ export default function App() {
     fetchData();
   }, [page, query]);
 
-  return;
-
-  <SearchBar onSubmit={onHandleSubmit} />;
-  {images.length>0 && }
+  return (
+    <>
+      <SearchBar onSubmit={onHandleSubmit} />
+      {images.length > 0 && <ImageGallery images={images} />}
+      {!images.length && !isEmpty && (
+        <p>
+          необхідно ввести текст для пошуку зображень. Ця перевірка виконується
+          в компоненті SearchBar в момент відправки форми. Для сповіщень
+          використовуй бібліотеку React Hot Toast.
+        </p>
+      )}
+      {isLoading && <Loader />}
+      {error && { error }}
+      {isEmpty && <p>якийсь текст</p>}
+    </>
+  );
 }
