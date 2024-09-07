@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import { getImage } from "../../getImage";
 import ImageGallery from "../ImageGallery/ImageGallery";
-import Loader from "../Loader/Loader";
+// import Loader from "../Loader/Loader";
 
 import "./App.css";
 
@@ -14,10 +14,6 @@ export default function App() {
   const [error, setError] = useState(null);
   const [isEmpty, setIsEmpty] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
-
-  const onHandleSubmit = (value) => {
-    setQuery(value);
-  };
 
   useEffect(() => {
     if (!query) {
@@ -41,6 +37,15 @@ export default function App() {
     fetchData();
   }, [page, query]);
 
+  const onHandleSubmit = (value) => {
+    setQuery(value);
+    setImages([]);
+    setPage(1);
+    setError(null);
+    setIsEmpty(false);
+    setIsVisible(false);
+  };
+
   return (
     <>
       <SearchBar onSubmit={onHandleSubmit} />
@@ -52,7 +57,7 @@ export default function App() {
           використовуй бібліотеку React Hot Toast.
         </p>
       )}
-      {isLoading && <Loader />}
+      {/* {isLoading && <Loader />} */}
       {error && { error }}
       {isEmpty && <p>якийсь текст</p>}
     </>
