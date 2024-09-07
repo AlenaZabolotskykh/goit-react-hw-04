@@ -1,0 +1,9 @@
+.btn {
+  border: 2px solid rgb(2, 64, 73);
+  box-shadow: inset 1px 1px 3px -1px rgba(0, 0, 0, 0.6);
+  margin-left: 20px;
+  text-align: center;
+  padding: 5px;
+  width: 300px;
+  margin: 20px 0;
+}

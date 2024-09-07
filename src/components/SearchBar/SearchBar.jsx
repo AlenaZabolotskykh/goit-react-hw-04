@@ -47,6 +47,8 @@ export default function SearchBar({ onSubmit }) {
             height: "100px",
             fontSize: "40px",
             fontWeight: "300px",
+            margin: "0 auto",
+            marginBottom: "20px",
           },
         }}
       />
