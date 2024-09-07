@@ -55,13 +55,13 @@ export default function App() {
     <>
       <SearchBar onSubmit={onHandleSubmit} />
       {images.length > 0 && <ImageGallery images={images} />}
-      {!images.length && !isEmpty && (
+      {/* {!images.length && !isEmpty && (
         <p>
           необхідно ввести текст для пошуку зображень. Ця перевірка виконується
           в компоненті SearchBar в момент відправки форми. Для сповіщень
           використовуй бібліотеку React Hot Toast.
         </p>
-      )}
+      )} */}
       {isLoading && <Loader />}
       {error && { error }}
       {isEmpty && <p>якийсь текст</p>}
