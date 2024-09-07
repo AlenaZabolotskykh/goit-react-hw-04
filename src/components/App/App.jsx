@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import { getImage } from "../../getImage";
 import ImageGallery from "../ImageGallery/ImageGallery";
-// import Loader from "../Loader/Loader";
+import Loader from "../Loader/Loader";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 
 import "./App.css";
 
@@ -20,8 +21,8 @@ export default function App() {
       return;
     }
     const fetchData = async () => {
-      setIsLoading(true);
       try {
+        setIsLoading(true);
         const { results, total_pages } = await getImage(query, page);
         if (!results.length) {
           return setIsEmpty(true);
@@ -46,6 +47,10 @@ export default function App() {
     setIsVisible(false);
   };
 
+  const handleLoadMore = () => {
+    setPage(page + 1);
+  };
+
   return (
     <>
       <SearchBar onSubmit={onHandleSubmit} />
@@ -57,9 +62,10 @@ export default function App() {
           використовуй бібліотеку React Hot Toast.
         </p>
       )}
-      {/* {isLoading && <Loader />} */}
+      {isLoading && <Loader />}
       {error && { error }}
       {isEmpty && <p>якийсь текст</p>}
+      {images.length > 0 && <LoadMoreBtn onClick={handleLoadMore} />}
     </>
   );
 }
