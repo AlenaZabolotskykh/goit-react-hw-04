@@ -31,7 +31,21 @@ export default function SearchBar({ onSubmit }) {
         />
         <button type="submit">Search</button>
       </form>
-      <Toaster />
+
+      <Toaster
+        toastOptions={{
+          className: "",
+          style: {
+            border: "1px solid red",
+            padding: "16px",
+            color: "red",
+            width: "500px",
+            height: "100px",
+            fontSize: "40px",
+            fontWeight: "300px",
+          },
+        }}
+      />
     </header>
   );
 }
