@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import SearchBar from "../SearchBar/SearchBar";
 import { getImage } from "../../getImage";
+import SearchBar from "../SearchBar/SearchBar";
+
 import ImageGallery from "../ImageGallery/ImageGallery";
 import Loader from "../Loader/Loader";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
+import ImageModal from "../ImageModal/ImageModal";
 
 import "./App.css";
 
@@ -15,6 +17,8 @@ export default function App() {
   const [error, setError] = useState(null);
   const [isEmpty, setIsEmpty] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState(null);
 
   useEffect(() => {
     if (!query) {
@@ -51,14 +55,33 @@ export default function App() {
     setPage(page + 1);
   };
 
+  function openModal(image) {
+    setModalImage(image);
+    setModalOpen(true);
+  }
+
+  function closeModal() {
+    setModalImage(null);
+    setModalOpen(false);
+  }
+
   return (
     <>
       <SearchBar onSubmit={onHandleSubmit} />
-      {images.length > 0 && <ImageGallery images={images} />}
+      {images.length > 0 && (
+        <ImageGallery images={images} handleClickOnImage={openModal} />
+      )}
       {isLoading && <Loader />}
       {error && { error }}
       {isEmpty && <p>No results</p>}
       {images.length > 0 && <LoadMoreBtn onClick={handleLoadMore} />}
+      {modalOpen && modalImage && (
+        <ImageModal
+          isOpen={openModal}
+          onClose={closeModal}
+          image={modalImage}
+        ></ImageModal>
+      )}
     </>
   );
 }
