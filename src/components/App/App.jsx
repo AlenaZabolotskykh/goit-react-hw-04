@@ -6,6 +6,7 @@ import ImageGallery from "../ImageGallery/ImageGallery";
 import Loader from "../Loader/Loader";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "../ImageModal/ImageModal";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 import "./App.css";
 
@@ -15,7 +16,7 @@ export default function App() {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isEmpty, setIsEmpty] = useState(null);
+  // const [isEmpty, setIsEmpty] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState(null);
@@ -28,12 +29,9 @@ export default function App() {
       try {
         setIsLoading(true);
         const { results, total_pages } = await getImage(query, page);
-        if (!results.length) {
-          return setIsEmpty(true);
-        }
         setImages((prevImages) => [...prevImages, ...results]);
         setIsVisible(page < total_pages);
-      } catch {
+      } catch (error) {
         setError(error);
       } finally {
         setIsLoading(false);
@@ -47,7 +45,6 @@ export default function App() {
     setImages([]);
     setPage(1);
     setError(null);
-    setIsEmpty(false);
     setIsVisible(false);
   };
 
@@ -72,12 +69,11 @@ export default function App() {
         <ImageGallery images={images} handleClickOnImage={openModal} />
       )}
       {isLoading && <Loader />}
-      {error && { error }}
-      {isEmpty && <p>No results</p>}
+      {error && <ErrorMessage message={error} />}
       {images.length > 0 && <LoadMoreBtn onClick={handleLoadMore} />}
       {modalOpen && modalImage && (
         <ImageModal
-          isOpen={openModal}
+          isOpen={modalOpen}
           onClose={closeModal}
           image={modalImage}
         ></ImageModal>

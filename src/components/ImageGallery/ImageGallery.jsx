@@ -3,16 +3,15 @@ import ImageCard from "../ImageCard/ImageCard";
 export default function ImageGallery({ images, handleClickOnImage }) {
   return (
     <ul className={css.list}>
-      <li className={css.item}>
-        {images.map(({ alt_description, id, urls }) => (
+      {images.map(({ alt_description, id, urls }) => (
+        <li className={css.item} key={id}>
           <ImageCard
-            key={id}
             alt={alt_description}
             src={urls}
             handleClickOnImage={handleClickOnImage}
           />
-        ))}
-      </li>
+        </li>
+      ))}
     </ul>
   );
 }
